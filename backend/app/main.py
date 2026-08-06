@@ -5,10 +5,12 @@ from app.api.metrics import router as metrics_router
 from app.api.resources import router as resources_router
 from app.api.alerts import router as alerts_router
 from app.api.timeline import router as timeline_router
+from app.config.settings import settings
+
 
 app = FastAPI(
-    title="CloudOps Monitor API",
-    version="1.0.0"
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION
 )
 
 origins = [
