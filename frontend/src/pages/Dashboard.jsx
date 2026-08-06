@@ -1,49 +1,51 @@
-import { useEffect, useState } from "react";
-import api from "../services/api";
+import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
+import MetricCard from "../components/MetricCard";
 
 function Dashboard() {
-  const [backendData, setBackendData] = useState(null);
-
-  useEffect(() => {
-    api.get("/")
-      .then((response) => {
-        setBackendData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center text-white">
-      <h1 className="text-5xl font-bold text-cyan-400">
-        CloudOps Monitor
-      </h1>
+    <div className="flex min-h-screen bg-slate-900 text-white">
+      <Sidebar />
 
-      <div className="mt-10 rounded-xl bg-slate-800 p-8 shadow-lg w-[500px]">
-        <h2 className="text-2xl font-semibold mb-4">
-          Backend Status
-        </h2>
+      <div className="flex-1">
+        <Navbar />
 
-        {backendData ? (
-          <>
-            <p className="text-green-400 text-xl">
-              🟢 Connected
-            </p>
+        <main className="p-8">
+          <h2 className="text-3xl font-bold">
+            Dashboard
+          </h2>
 
-            <p className="mt-4">
-              {backendData.message}
-            </p>
-
-            <p>
-              Status: {backendData.status}
-            </p>
-          </>
-        ) : (
-          <p className="text-red-400">
-            Connecting...
+          <p className="mt-2 text-gray-400">
+            Welcome to CloudOps Monitor
           </p>
-        )}
+                    <div className="grid grid-cols-4 gap-6 mt-10">
+
+    <MetricCard
+        title="CPU Usage"
+        value="45%"
+        color="text-green-400"
+    />
+
+    <MetricCard
+        title="Memory"
+        value="68%"
+        color="text-yellow-400"
+    />
+
+    <MetricCard
+        title="Storage"
+        value="74%"
+        color="text-cyan-400"
+    />
+
+    <MetricCard
+        title="Network"
+        value="Healthy"
+        color="text-blue-400"
+    />
+
+</div>
+        </main>
       </div>
     </div>
   );
