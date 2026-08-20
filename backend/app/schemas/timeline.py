@@ -1,12 +1,13 @@
-from pydantic import BaseModel
-from typing import List
+from fastapi import APIRouter
+from app.schemas.timeline import TimelineResponse
+from app.services.dashboard_service import get_timeline
+from app.utils.logger import logger
+
+router = APIRouter()
 
 
-class TimelineEvent(BaseModel):
-    time: str
-    event: str
+@router.get("/timeline", response_model=TimelineResponse)
+def timeline():
+    logger.info("GET /timeline requested")
 
-
-class TimelineResponse(BaseModel):
-    count: int
-    timeline: List[TimelineEvent]
+    return get_timeline()

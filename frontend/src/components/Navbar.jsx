@@ -1,4 +1,4 @@
-function Navbar({ connected = true }) {
+function Navbar({ connected = true, onLogout }) {
   const currentTime = new Date().toLocaleTimeString();
 
   return (
@@ -55,6 +55,14 @@ function Navbar({ connected = true }) {
           </div>
 
         </div>
+
+        {/* Logout */}
+        <button
+          onClick={onLogout}
+          className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-400 transition hover:bg-red-500/20 hover:text-red-300"
+        >
+          Logout
+        </button>
 
       </div>
 

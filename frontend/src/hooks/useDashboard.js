@@ -8,6 +8,9 @@ import {
   getTimeline,
 } from "../services/dashboardService";
 
+const REFRESH_INTERVAL =
+  Number(import.meta.env.VITE_REFRESH_INTERVAL || 30) * 1000;
+
 export default function useDashboard() {
   const [dashboard, setDashboard] = useState(null);
   const [metrics, setMetrics] = useState(null);
@@ -50,15 +53,19 @@ export default function useDashboard() {
   }
 
   useEffect(() => {
+  const timeout = setTimeout(() => {
     loadData();
+  }, 0);
 
-    // Refresh dashboard every 30 seconds
-    const interval = setInterval(() => {
-      loadData();
-    }, 30000);
+  const interval = setInterval(() => {
+    loadData();
+  }, REFRESH_INTERVAL);
 
-    return () => clearInterval(interval);
-  }, []);
+  return () => {
+    clearTimeout(timeout);
+    clearInterval(interval);
+  };
+}, []);
 
   return {
     dashboard,

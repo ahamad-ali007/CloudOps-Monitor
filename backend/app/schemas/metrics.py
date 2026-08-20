@@ -1,9 +1,26 @@
-from fastapi import APIRouter
-from app.schemas.metrics import MetricsResponse
-from app.services.dashboard_service import dashboard_service
+from pydantic import BaseModel
+from typing import List
 
-router = APIRouter()
 
-@router.get("/metrics", response_model=MetricsResponse)
-def metrics():
-    return dashboard_service.get_metrics()
+class ChartPoint(BaseModel):
+    time: str
+    value: float
+
+
+class MetricsCards(BaseModel):
+    cpu: float
+    memory: float
+    storage: float
+    network: str
+
+
+class NetworkMetrics(BaseModel):
+    bytes_sent: float
+    bytes_recv: float
+
+
+class MetricsResponse(BaseModel):
+    cards: MetricsCards
+    cpu_chart: List[ChartPoint]
+    memory_chart: List[ChartPoint]
+    network_metrics: NetworkMetrics

@@ -1,14 +1,13 @@
-from pydantic import BaseModel
-from typing import List
+from fastapi import APIRouter
+from app.schemas.alerts import AlertsResponse
+from app.services.dashboard_service import get_alerts
+from app.utils.logger import logger
+
+router = APIRouter()
 
 
-class Alert(BaseModel):
-    id: int
-    level: str
-    message: str
+@router.get("/alerts", response_model=AlertsResponse)
+def alerts():
+    logger.info("GET /alerts requested")
 
-
-class AlertsResponse(BaseModel):
-    count: int
-    last_updated: str
-    alerts: List[Alert]
+    return get_alerts()

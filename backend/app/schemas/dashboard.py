@@ -1,8 +1,13 @@
 from fastapi import APIRouter
-from app.services.dashboard_service import dashboard_service
+from app.schemas.dashboard import DashboardResponse
+from app.services.dashboard_service import get_dashboard
+from app.utils.logger import logger
 
 router = APIRouter()
 
-@router.get("/dashboard")
+
+@router.get("/dashboard", response_model=DashboardResponse)
 def dashboard():
-    return dashboard_service.get_dashboard()
+    logger.info("GET /dashboard requested")
+
+    return get_dashboard()
