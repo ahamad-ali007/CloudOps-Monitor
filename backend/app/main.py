@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
 
+from app.database.database import Base, engine
+from app.models.user import User
 from app.api.dashboard import router as dashboard_router
 from app.api.metrics import router as metrics_router
 from app.api.resources import router as resources_router
@@ -16,6 +18,12 @@ app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION
 )
+
+# ----------------------------------------------------------
+# DATABASE INITIALIZATION
+# ----------------------------------------------------------
+
+Base.metadata.create_all(bind=engine)
 
 
 # ----------------------------------------------------------
