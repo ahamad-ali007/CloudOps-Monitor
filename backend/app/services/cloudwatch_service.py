@@ -1,9 +1,7 @@
 from datetime import datetime, timedelta, timezone
 
-import boto3
-
-from app.config.aws import get_cloudwatch_client, get_ec2_client
 from app.config.settings import settings
+from app.config.aws import get_cloudwatch_client, get_ec2_client
 from app.utils.logger import logger
 
 
@@ -14,7 +12,8 @@ class CloudWatchService:
         self.client = get_cloudwatch_client()
 
         # EC2 client → instance information
-	self.ec2_client = get_ec2_client()
+        self.ec2_client = get_ec2_client()
+
         # Cache discovered dimensions
         self._hostname = None
         self._storage_dimensions = None
