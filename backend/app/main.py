@@ -12,21 +12,31 @@ from app.api.auth import router as auth_router
 from app.config.settings import settings
 
 
-
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION
 )
 
 
-
+# ----------------------------------------------------------
+# CORS CONFIGURATION
+# ----------------------------------------------------------
 
 origins = [
+    # Local development
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175",
-    os.getenv("FRONTEND_URL", ""),
+
+    # Production frontend
+    "https://cloudops-monitor-frontend.onrender.com",
 ]
+
+# Optional FRONTEND_URL from Render environment variables
+frontend_url = os.getenv("FRONTEND_URL")
+
+if frontend_url and frontend_url not in origins:
+    origins.append(frontend_url)
 
 
 app.add_middleware(
