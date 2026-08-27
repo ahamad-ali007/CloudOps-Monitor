@@ -18,6 +18,7 @@ app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION
 )
+Base.metadata.create_all(bind=engine)
 
 # ----------------------------------------------------------
 # DATABASE INITIALIZATION
