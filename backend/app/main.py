@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from app.api.dashboard import router as dashboard_router
 from app.api.metrics import router as metrics_router
@@ -11,16 +12,20 @@ from app.api.auth import router as auth_router
 from app.config.settings import settings
 
 
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION
 )
 
 
+
+
 origins = [
     "http://localhost:5173",
     "http://localhost:5174",
     "http://localhost:5175",
+    os.getenv("FRONTEND_URL", ""),
 ]
 
 
